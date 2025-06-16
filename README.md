@@ -1,5 +1,5 @@
 # gcp-gke-iac
-IaC (Terraform, k8s) to create GKE on GCP
+IaC to create and manage GKE on GCP
 
 ## Prerequisites
 
