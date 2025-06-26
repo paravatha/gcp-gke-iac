@@ -29,13 +29,15 @@ helm upgrade --install cert-manager jetstack/cert-manager \
   --set crds.enabled=true \
   --wait
 
-k set namespace default
+kubectl create namespace kserve
 echo "Installing KServe CRDs..."
 helm upgrade --install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd \
+  --namespace kserve \
   --version ${KSERVE_VERSION} \
   --wait
 
 echo "Installing KServe..."
 helm upgrade --install kserve oci://ghcr.io/kserve/charts/kserve \
+  --namespace kserve \
   --version ${KSERVE_VERSION} \
   --wait

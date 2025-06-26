@@ -45,6 +45,22 @@ terraform apply -var-file=dev.tfvars
 terraform destroy -var-file=dev.tfvars
 ```
 
+## Load Testing with Vegeta and KServe
+
+This repository includes a Kubernetes Job for load testing KServe model endpoints using [Vegeta](https://github.com/tsenart/vegeta).
+
+- The load test job is defined in `k8s/kserve/perf-test.yaml`.
+- It uses a container running Vegeta to send POST requests to the `sklearn-iris` model endpoint deployed via KServe.
+- The test parameters (duration, rate, CPUs) and request payload are configurable in the ConfigMap within the same YAML file.
+- To run the load test, apply the manifest to your cluster:
+
+  ```sh
+  kubectl apply -f k8s/kserve/perf-test.yaml
+  ```
+
+- The job will generate a text report summarizing the performance of the model endpoint.
+- You can modify the target endpoint or payload by editing the `cfg` and `payload` sections in the ConfigMap.
+
 ## Notes
 
 - The GKE version is controlled by the `gke_version_prefix` variable in `dev.tfvars`.

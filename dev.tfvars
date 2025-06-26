@@ -1,4 +1,4 @@
-project_id   = "playground-s-11-9cec6e26"
+project_id   = "playground-s-11-ec47c24c"
 region       = "us-central1"
 cluster_name = "mlops-gke-dev"
 node_count   = 1

@@ -14,10 +14,14 @@ gcloud auth application-default set-quota-project "$PROJECT_ID"
 gcloud config set project "$PROJECT_ID"
 gcloud services enable container.googleapis.com
 
-tfinit
-tfp -var-file=dev.tfvars
-tfa -var-file=dev.tfvars
+terraform init
+
+terraform plan -var-file=dev.tfvars
+
+terraform apply -var-file=dev.tfvars
 
 gcloud container clusters list
 
-gcloud container clusters get-credentials mlops-gke-dev --region us-central1 --project "$PROJECT_ID"
+gcloud container clusters get-credentials mlops-gke-dev --region us-central1
+
+
