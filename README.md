@@ -45,10 +45,36 @@ terraform apply -var-file=dev.tfvars
 terraform destroy -var-file=dev.tfvars
 ```
 
-## Load Testing with Vegeta and KServe
+## Setting Up KServe and Dependencies
+
+To deploy machine learning models with KServe, you need to install several components in your Kubernetes cluster:
+
+- **Knative Serving**: Provides serverless deployment and scaling for model inference services.
+- **Istio**: Acts as the networking layer for Knative, enabling advanced traffic management.
+- **cert-manager**: Manages certificates for secure communication.
+- **KServe**: The core framework for serving ML models on Kubernetes.
+
+A helper script is provided to automate the installation of these components:
+
+```sh
+cd k8s/kserve
+./install-kserve.sh
+```
+
+This script will:
+- Install Knative Serving CRDs and core components
+- Install Istio and configure it for Knative
+- Install cert-manager using Helm
+- Create the `kserve` namespace
+- Install KServe CRDs and KServe itself using Helm
+
+You can review or modify the script at `k8s/kserve/install-kserve.sh`.
+
+## Load Testing KServe with Vegeta 
 
 This repository includes a Kubernetes Job for load testing KServe model endpoints using [Vegeta](https://github.com/tsenart/vegeta).
 
+- Deploy the Kserve sample model `k8s/kserve/sample-model/sklearn.yaml`
 - The load test job is defined in `k8s/kserve/perf-test.yaml`.
 - It uses a container running Vegeta to send POST requests to the `sklearn-iris` model endpoint deployed via KServe.
 - The test parameters (duration, rate, CPUs) and request payload are configurable in the ConfigMap within the same YAML file.
