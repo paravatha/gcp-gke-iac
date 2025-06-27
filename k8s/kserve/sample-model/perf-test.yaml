@@ -13,7 +13,9 @@ spec:
       restartPolicy: OnFailure
       containers:
       - args:
-        - vegeta -cpus=1 attack -duration=1m -rate=5/1s -targets=/var/vegeta/cfg
+        # The command below runs vegeta to load test the sklearn-iris model.
+        # It sends requests at a rate of 10 requests per second for 1 minute.
+        - vegeta -cpus=1 attack -duration=1m -rate=10/1s -targets=/var/vegeta/cfg
           | vegeta report -type=text
         command:
         - sh 
